@@ -1,0 +1,50 @@
+{
+  "name": "checkout",
+  "version": "0.0.0",
+  "private": true,
+  "eslintConfig": {
+    "extends": [
+      "@vue/eslint-config-prettier"
+    ],
+    "globals": {
+      "_a": true,
+      "_l": true
+    }
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build --base=/checkoutv2",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@fontsource-variable/orbitron": "^5.0.12",
+    "@fontsource-variable/source-code-pro": "^5.0.9",
+    "@fontsource/source-sans-pro": "^5.0.8",
+    "@iconify/vue": "^4.1.1",
+    "@tailwindcss/forms": "^0.5.6",
+    "@vueuse/core": "^10.4.1",
+    "autoprefixer": "^10.4.15",
+    "credit-card-type": "^9.1.0",
+    "floating-vue": "^2.0.0-beta.24",
+    "motion": "^10.16.2",
+    "pinia": "^2.1.6",
+    "postcss": "^8.4.30",
+    "preline": "^1.9.0",
+    "unplugin-auto-import": "^0.16.6",
+    "unplugin-vue-components": "^0.25.2",
+    "vue": "^3.3.4",
+    "vue-imask": "^7.1.3"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.3.3",
+    "@vitejs/plugin-vue": "^4.3.4",
+    "@vue/eslint-config-prettier": "^8.0.0",
+    "eslint": "^8.49.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "prettier": "^3.0.3",
+    "tailwindcss": "^3.3.3",
+    "vite": "^4.4.9"
+  }
+}

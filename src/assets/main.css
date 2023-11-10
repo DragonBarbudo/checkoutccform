@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --light: #f5f5f5;
+    --dark: #333366;
+    --main: #941b80;
+    --second: #0096ae;
+}
+
+body {
+    font-family: 'Source Sans Pro', sans-serif;
+    color: #666;
+}
+
+input, textarea, select, option {
+    font-family: 'Source Code Pro Variable', sans-serif;
+}
+
+.v-popper--theme-dropdown .v-popper__arrow-inner{
+    @apply !border-cmain;
+}
+.v-popper--theme-dropdown .v-popper__inner {
+    @apply  text-xs !text-white shadow-lg  !bg-cmain p-1 max-w-[240px];
+}
