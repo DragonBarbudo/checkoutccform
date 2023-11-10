@@ -3,7 +3,7 @@ import world from './world.js'
 
 export const useConfigStore = defineStore('config', () => {
     //0:loading, 1:starting, 2:formview, 3:paying, 4: done
-    const status = ref(4)
+    const status = ref(0)
     const worldDB = world
 
     const theLogo = _a.logo;
