@@ -3,14 +3,15 @@
   import { useIMask } from 'vue-imask';
   import { useConfigStore } from '../stores/configuration';
   import { useEventBus } from '@vueuse/core'
-const bus = useEventBus('invalids')
+  const props = defineProps({
+    name: String
+  })
+  const bus = useEventBus('invalids')
 bus.on((ev)=>{
   blurred.value = true
 })
   const config = useConfigStore()
-  const props = defineProps({
-    name: String,
-  })
+  
   const emit = defineEmits(['update:modelValue'])
   const isvalid = ref(false)
   const blurred = ref(false)
@@ -32,6 +33,7 @@ bus.on((ev)=>{
 
 </script>
 <template>
+
 <InputValidation :text="config.l('inputZipVer')" :blurred="blurred" :notvalid="!isvalid">
   <div class="relative">
 

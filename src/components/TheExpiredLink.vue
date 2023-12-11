@@ -19,12 +19,12 @@ onMounted(() => {
             <img :src="config.theLogo" class="absolute h-full w-full object-contain">
         </div>
 
-        <div class="bg-teal-400 text-white rounded p-4 text-center text-xl w-full">
-            <Icon icon="ph:shield-check" class="text-4xl mx-auto mb-3"></Icon>
-            <div>{{ config.l('payDone') }}</div>
+        <div class="bg-rose-400 text-white rounded p-4 text-center w-full">
+            <Icon icon="ph:calendar-x" class="text-4xl mx-auto mb-3"></Icon>
+            <h2 class="text-xl">{{ config.l('expiredTitle') }}</h2>
+            <div>{{ config.l('expiredText') }}</div>
         </div>
-        <TheFormInfo class="w-full"></TheFormInfo>
-        <a class="bg-csecond rounded py-2 px-10 text-white" :href="config.theContinue">{{ config.l('payContinue') }}</a>
+
         
         <a :href="config.thePoweredLink" target="_blank" class="block w-80 h-40 max-w-[30%] mx-auto mt-5 overflow-hidden relative">
             <img :src="config.thePowered" class="absolute h-full w-full object-contain">

@@ -1,9 +1,11 @@
 var _l = {
-  titleInfoCard: 'Información de tarjeta',
+  titleInfoCard: 'Ingrese sus datos para procesar el pago',
   cardNumber: 'Número de tarjeta',
   cardNumberVer: 'Ingresa los 15 o 16 dígitos de la tarjeta.',
   cardName: 'Nombre de tarjetahabiente',
   cardNameVer: 'Nombre de tarjetahabiente incompleto',
+  cardNameFVer: 'Nombre (s) de tarjetahabiente incompleto',
+  cardNameLVer: 'Apellidos de tarjetahabiente incompleto',
   cardExpiry: 'Expiración',
   cardExpiryVer: 'Fecha de expiración inválida.',
   cardCVC: 'Código de seguridad',
@@ -13,9 +15,9 @@ var _l = {
   cardRememberYes: 'Sí recordar',
   cardFee: 'Compra a crédito',
   titleInfoGen: 'Información general',
-  inputName: 'Nombre',
+  inputName: 'Nombre (s)',
   inputNameVer: 'Ingresa el nombre.',
-  inputLastname: 'Apellido',
+  inputLastname: 'Apellidos',
   inputLastnameVer: 'Ingresa el apellido.',
   inputMail: 'Email',
   inputMailVer: 'Correo electrónico inválido.',
@@ -40,5 +42,8 @@ var _l = {
   payTerms: 'Términos y condiciones.',
   payProcess: 'Procesar pago',
   payDone: 'Pago completado',
-  payContinue: 'Continuar'
+  payContinue: 'Continuar',
+  expiredTitle: 'Liga de pago expirada',
+  expiredText: 'La liga para realizar el pago ha expirado. Solicite una nueva liga.',
+  isPaidText: 'Ya existe un pago asociado a la referencia.'
 }

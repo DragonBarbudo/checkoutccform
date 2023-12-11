@@ -3,6 +3,8 @@ import {ref} from 'vue'
 import PreLoader from './components/PreLoader.vue'
 import TheForm from './components/TheForm.vue'
 import TheSuccess from './components/TheSuccess.vue'
+import TheIsPaid from './components/TheIsPaid.vue'
+import TheExpiredLink from './components/TheExpiredLink.vue'
 import { useConfigStore } from './stores/configuration';
 const config = useConfigStore()
 const refPreloader = ref()
@@ -16,8 +18,12 @@ const endPreload = () => {
   
   <main>
     
-    <TheForm v-if="config.status>=1"></TheForm>
+    <TheForm v-if="config.status>=1 && config.status < 99"></TheForm>
     <TheSuccess v-if="config.status==4"></TheSuccess>
+    
+    <!-- errors -->
+    <TheIsPaid v-if="config.status==99"></TheIsPaid>
+    <TheExpiredLink v-if="config.status==100"></TheExpiredLink>
   </main>
   
 

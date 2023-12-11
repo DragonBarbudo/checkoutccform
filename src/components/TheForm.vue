@@ -2,6 +2,7 @@
 import { animate, spring, inView } from "motion"
 import TheFormInputtext from "./TheFormInputtext.vue";
 import TheFormInputPhone from "./TheFormInputPhone.vue";
+import InputNameSeparated from "./InputNameSeparated.vue";
 const config = useConfigStore()
 const form = ref()
 onMounted(() => {
@@ -36,6 +37,13 @@ watch(()=>config.status, (nval, oval)=>{
     }
 })
 
+// IF 3D secure
+watch(()=>config.form.card, ()=>{
+    if(config.secure3d){
+        config.form.card.name = config.form.card.firstName + ' ' + config.form.card.lastName 
+    }
+}, {deep:true})
+
 </script>
 <template>
 <div class="w-full -translate-y-5 opacity-0" ref="form">
@@ -53,10 +61,33 @@ watch(()=>config.status, (nval, oval)=>{
                     <TheFormLabel for="cardnum">{{ config.l('cardNumber') }}</TheFormLabel>
                     <InputCardnumber v-model="config.form.card.number"></InputCardnumber>
                 </div>
-                <div class="bg-slate-100 p-2 rounded">
-                    <TheFormLabel for="cardname">{{ config.l('cardName') }}</TheFormLabel>
-                    <InputName v-model="config.form.card.name"></InputName>
-                </div>
+                <!-- NOMBRE-->
+                <template v-if="!config.secure3d">
+                    <div class="bg-slate-100 p-2 rounded">
+                        <TheFormLabel for="cardname">{{ config.l('cardName') }}</TheFormLabel>
+                        <InputName v-model="config.form.card.name"></InputName>
+                    </div>
+                </template>
+                <template v-else>
+                    <div class="bg-slate-100 p-2 rounded">
+                        <div class="grid md:grid-cols-2  gap-1">
+                            <div>
+                                <TheFormLabel for="cardFname">{{ config.l('inputName') }}</TheFormLabel>
+                                <InputNameSeparated v-model="config.form.card.firstName"></InputNameSeparated>
+                            </div>
+                            <div>
+                                <TheFormLabel for="cardLname">{{ config.l('inputLastname') }}</TheFormLabel>
+                                <InputLastNameSeparated v-model="config.form.card.lastName"></InputLastNameSeparated>
+                            </div>
+
+                        </div>
+                    </div>
+                </template>
+                
+
+
+
+
                 <div class="grid md:grid-cols-2  gap-1">
                     <div class="bg-slate-100 p-2 rounded">
                         <TheFormLabel for="cardexpire" mini="MM/YY">{{ config.l('cardExpiry') }}</TheFormLabel>
@@ -73,79 +104,63 @@ watch(()=>config.status, (nval, oval)=>{
                         <InputRemember v-model="config.form.remembercard"></InputRemember>
                     </div>
                     <div class="bg-slate-100 p-2 rounded">
-                        <TheFormLabel for="remember">{{ config.l('cardFee') }}</TheFormLabel>
+                        <TheFormLabel for="creditfee">{{ config.l('cardFee') }}</TheFormLabel>
                         <InputCredit v-model="config.form.credit"></InputCredit>
                     </div>
                 </div>
 
-                <!-- GENERAL INFORMATION -->
-                <h2 class="my-5">{{ config.l('titleInfoGen') }}</h2>
-
-                <div class="grid md:grid-cols-2 gap-1">
-                    <div class="bg-slate-100 p-2 rounded">
-                        <TheFormLabel for="infoFirstName" >{{ config.l('inputName') }}</TheFormLabel>
-                        <TheFormInputtext :validation="config.l('inputNameVer')" name="infoFirstName" v-model="config.form.information.firstName">
-                            <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
-                                <TheFormIcon icon="ph:user"></TheFormIcon>
-                            </div>
-                        </TheFormInputtext>
-                    </div>
-                    <div class="bg-slate-100 p-2 rounded">
-                        <TheFormLabel for="infoLastName" >{{ config.l('inputLastname') }}</TheFormLabel>
-                        <TheFormInputtext :validation="config.l('inputLastnameVer')" name="infoLastName" v-model="config.form.information.lastName">
-                            <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
-                                <TheFormIcon icon="ph:user"></TheFormIcon>
-                            </div>
-                        </TheFormInputtext>
-                    </div>
-                </div>
+              
                 <div class="bg-slate-100 p-2 rounded">
                     <TheFormLabel for="infoEmail" >{{ config.l('inputMail') }}</TheFormLabel>
                     <TheFormInputEmail type="email" name="infoEmail" v-model="config.form.information.email"></TheFormInputEmail>
                 </div>
 
-                <div class="bg-slate-100 p-2 rounded">
-                    <TheFormLabel for="infoPhone" >{{ config.l('inputPhone') }}</TheFormLabel>
-                    <TheFormInputPhone type="phone" name="infoPhone" v-model="config.form.information.phone"></TheFormInputPhone>
-                </div>
-                <div class="grid md:grid-cols-2 gap-1">
-                    <div class="bg-slate-100 p-2 rounded">
-                        <TheFormLabel for="infoCountry" >{{ config.l('inputCountry') }}</TheFormLabel>
-                        <TheFormInputCountry :countries="config.worldDB.countries" name="infoCountry" v-model="config.form.information.country"></TheFormInputCountry>
-                    </div>
-                    <div class="bg-slate-100 p-2 rounded">
-                        <TheFormLabel for="infoZipcode" >{{ config.l('inputZIP') }}</TheFormLabel>
-                            <TheFormInputZipcode :countries="config.worldDB.countries" name="infoZipcode" v-model="config.form.information.zipcode"></TheFormInputZipcode>
-                    </div>
-                </div>
+                <template v-if="config.secure3d">
 
-                <div class="grid md:grid-cols-2 gap-1">
+                
                     <div class="bg-slate-100 p-2 rounded">
-                            <TheFormLabel for="infoState" >{{ config.l('inputState') }}</TheFormLabel>
-                            <TheFormInputState :countryid="config.form.information.country.id" :states="config.worldDB.states" name="infoState" v-model="config.form.information.state"></TheFormInputState>
+                        <TheFormLabel for="infoPhone" >{{ config.l('inputPhone') }}</TheFormLabel>
+                        <TheFormInputPhone type="phone" name="infoPhone" v-model="config.form.information.phone"></TheFormInputPhone>
+                    </div>
+                    <div class="grid md:grid-cols-2 gap-1">
+                        <div class="bg-slate-100 p-2 rounded">
+                            <TheFormLabel for="infoCountry" >{{ config.l('inputCountry') }}</TheFormLabel>
+                            <TheFormInputCountry :countries="config.worldDB.countries" name="infoCountry" v-model="config.form.information.country"></TheFormInputCountry>
+                        </div>
+                        <div class="bg-slate-100 p-2 rounded">
+                            <TheFormLabel for="infoZipcode" >{{ config.l('inputZIP') }}</TheFormLabel>
+                                <TheFormInputZipcode :countries="config.worldDB.countries" name="infoZipcode" v-model="config.form.information.zipcode"></TheFormInputZipcode>
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-1">
+                        <div class="bg-slate-100 p-2 rounded">
+                                <TheFormLabel for="infoState" >{{ config.l('inputState') }}</TheFormLabel>
+                                <TheFormInputState :countryid="config.form.information.country.id" :states="config.worldDB.states" name="infoState" v-model="config.form.information.state"></TheFormInputState>
+                        </div>
+                        <div class="bg-slate-100 p-2 rounded">
+                                <TheFormLabel for="infoCity" >{{ config.l('inputCity') }}</TheFormLabel>
+                                <TheFormInputtext :validation="config.l('inputCityVer')" name="infoCity" v-model="config.form.information.city">
+                                    <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
+                                        <TheFormIcon icon="ph:house"></TheFormIcon>
+                                    </div>
+                                </TheFormInputtext>
+                        </div>
                     </div>
                     <div class="bg-slate-100 p-2 rounded">
-                            <TheFormLabel for="infoCity" >{{ config.l('inputCity') }}</TheFormLabel>
-                            <TheFormInputtext :validation="config.l('inputCityVer')" name="infoCity" v-model="config.form.information.city">
+                            <TheFormLabel for="infoAddress1" >{{ config.l('inputAddress') }}</TheFormLabel>
+                            <TheFormInputtext :validation="config.l('inputAddressVer')" name="infoAddress1" v-model="config.form.information.address1">
                                 <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
-                                    <TheFormIcon icon="ph:house"></TheFormIcon>
+                                    <TheFormIcon icon="ph:buildings"></TheFormIcon>
+                                </div>
+                            </TheFormInputtext>
+                            <TheFormInputtext :norequired="true" name="infoAddress2" v-model="config.form.information.address2" class="mt-2">
+                                <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
+                                    <TheFormIcon icon="ph:buildings"></TheFormIcon>
                                 </div>
                             </TheFormInputtext>
                     </div>
-                </div>
-                <div class="bg-slate-100 p-2 rounded">
-                        <TheFormLabel for="infoAddress1" >{{ config.l('inputAddress') }}</TheFormLabel>
-                        <TheFormInputtext :validation="config.l('inputAddressVer')" name="infoAddress1" v-model="config.form.information.address1">
-                            <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
-                                <TheFormIcon icon="ph:buildings"></TheFormIcon>
-                            </div>
-                        </TheFormInputtext>
-                        <TheFormInputtext :norequired="true" name="infoAddress2" v-model="config.form.information.address2" class="mt-2">
-                            <div class="absolute inset-y-0 right-0 flex items-center pointer-events-none z-20 pr-4">
-                                <TheFormIcon icon="ph:buildings"></TheFormIcon>
-                            </div>
-                        </TheFormInputtext>
-                </div>
+                </template>
             </div>
         </div>
         
