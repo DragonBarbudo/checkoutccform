@@ -1,6 +1,6 @@
 <script setup>
 import { Icon } from '@iconify/vue';
-import { animate, spring, inView } from "motion"
+import { animate, spring } from "motion"
 import { useConfigStore } from '../stores/configuration';
 const config = useConfigStore()
 const endcard = ref(null)
